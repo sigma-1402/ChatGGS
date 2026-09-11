@@ -129,6 +129,77 @@
             margin-top: -15px;
             margin-bottom: 25px;
         }
+        /* Admin panel */
+.admin-panel {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 320px;
+    height: 100vh;
+    background: white;
+    border-right: 1px solid #dddddd;
+    z-index: 1000;
+    transition: left 0.25s ease;
+    box-shadow: 3px 0 15px rgba(0,0,0,0.08);
+}
+
+.admin-panel.open {
+    left: 0;
+}
+
+.admin-header {
+    height: 60px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    font-size: 17px;
+}
+
+.admin-header button {
+    border: none;
+    background: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.admin-content {
+    padding: 20px;
+}
+
+.admin-content h3 {
+    margin-top: 0;
+}
+
+.admin-status {
+    padding: 12px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.admin-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 5px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.admin-action {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px solid #dddddd;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.admin-action:hover {
+    background: #f5f5f5;
+}
     </style>
 </head>
 
@@ -137,7 +208,38 @@
     <div class="topbar">
         <button class="menu-button">☰</button>
         ChatGGS
+    <div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+        <strong>ChatGGS Admin</strong>
+        <button onclick="closeAdmin()">×</button>
     </div>
+
+    <div class="admin-content">
+        <h3>Dashboard</h3>
+
+        <div class="admin-status">
+            🟢 ChatGGS is online
+        </div>
+
+        <div class="admin-item">
+            <span>Users</span>
+            <strong>1</strong>
+        </div>
+
+        <div class="admin-item">
+            <span>Messages</span>
+            <strong>0</strong>
+        </div>
+
+        <button class="admin-action">
+            ⚙ Settings
+        </button>
+
+        <button class="admin-action">
+            🚫 Disable ChatGGS
+        </button>
+    </div>
+</div>
 
     <div class="chat" id="chat">
 
@@ -207,6 +309,16 @@
             }
         });
     </script>
+<script>
+    const adminPanel = document.getElementById("adminPanel");
 
+    document.querySelector(".menu-button").onclick = function() {
+        adminPanel.classList.add("open");
+    };
+
+    function closeAdmin() {
+        adminPanel.classList.remove("open");
+    }
+</script>
 </body>
 </html>
