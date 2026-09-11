@@ -1,214 +1,225 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatGGS</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+```
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #ffffff;
-            color: #222222;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #ffffff;
+        color: #222222;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-        /* Top bar */
-        .topbar {
-            height: 60px;
-            border-bottom: 1px solid #e5e5e5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            font-weight: bold;
-            font-size: 18px;
-        }
+    /* Top bar */
+    .topbar {
+        height: 60px;
+        border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        font-weight: bold;
+        font-size: 18px;
+    }
 
-        .menu-button {
-            position: absolute;
-            left: 18px;
-            border: none;
-            background: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
+    .menu-button {
+        position: absolute;
+        left: 18px;
+        border: none;
+        background: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
 
-        /* Chat area */
-        .chat {
-            flex: 1;
-            overflow-y: auto;
-            padding: 30px 20px 120px;
-        }
+    /* Chat area */
+    .chat {
+        flex: 1;
+        overflow-y: auto;
+        padding: 30px 20px 120px;
+    }
 
-        .message {
-            max-width: 750px;
-            margin: 0 auto 28px;
-            display: flex;
-        }
+    .message {
+        max-width: 750px;
+        margin: 0 auto 28px;
+        display: flex;
+    }
 
-        .message.ggs {
-            justify-content: flex-start;
-        }
+    .message.ggs {
+        justify-content: flex-start;
+    }
 
-        .message.user {
-            justify-content: flex-end;
-        }
+    .message.user {
+        justify-content: flex-end;
+    }
 
-        .bubble {
-            padding: 13px 17px;
-            border-radius: 18px;
-            max-width: 70%;
-            line-height: 1.5;
-        }
+    .bubble {
+        padding: 13px 17px;
+        border-radius: 18px;
+        max-width: 70%;
+        line-height: 1.5;
+        white-space: pre-wrap;
+    }
 
-        .ggs .bubble {
-            background: #f4f4f4;
-        }
+    .ggs .bubble {
+        background: #f4f4f4;
+    }
 
-        .user .bubble {
-            background: #e8f0fe;
-        }
+    .user .bubble {
+        background: #e8f0fe;
+    }
 
-        /* Bottom input */
-        .input-area {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 18px;
-            background: white;
-            border-top: 1px solid #eeeeee;
-        }
+    /* Bottom input */
+    .input-area {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 18px;
+        background: white;
+        border-top: 1px solid #eeeeee;
+    }
 
-        .input-box {
-            max-width: 750px;
-            margin: auto;
-            display: flex;
-            border: 1px solid #cccccc;
-            border-radius: 25px;
-            padding: 5px;
-            background: white;
-        }
+    .input-box {
+        max-width: 750px;
+        margin: auto;
+        display: flex;
+        border: 1px solid #cccccc;
+        border-radius: 25px;
+        padding: 5px;
+        background: white;
+    }
 
-        input {
-            flex: 1;
-            border: none;
-            outline: none;
-            padding: 12px 15px;
-            font-size: 15px;
-        }
+    input {
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 12px 15px;
+        font-size: 15px;
+    }
 
-        .send {
-            border: none;
-            background: #222222;
-            color: white;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-        }
+    .send {
+        border: none;
+        background: #222222;
+        color: white;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+    }
 
-        .send:hover {
-            background: #444444;
-        }
+    .send:hover {
+        background: #444444;
+    }
 
-        /* Status */
-        .status {
-            text-align: center;
-            font-size: 13px;
-            color: #777777;
-            margin-top: -15px;
-            margin-bottom: 25px;
-        }
-        /* Admin panel */
-.admin-panel {
-    position: fixed;
-    top: 0;
-    left: -320px;
-    width: 320px;
-    height: 100vh;
-    background: white;
-    border-right: 1px solid #dddddd;
-    z-index: 1000;
-    transition: left 0.25s ease;
-    box-shadow: 3px 0 15px rgba(0,0,0,0.08);
-}
+    /* Status */
+    .status {
+        text-align: center;
+        font-size: 13px;
+        color: #777777;
+        margin-top: -15px;
+        margin-bottom: 25px;
+    }
 
-.admin-panel.open {
-    left: 0;
-}
+    /* Admin panel */
+    .admin-panel {
+        position: fixed;
+        top: 0;
+        left: -320px;
+        width: 320px;
+        height: 100vh;
+        background: white;
+        border-right: 1px solid #dddddd;
+        z-index: 1000;
+        transition: left 0.25s ease;
+        box-shadow: 3px 0 15px rgba(0, 0, 0, 0.08);
+    }
 
-.admin-header {
-    height: 60px;
-    border-bottom: 1px solid #e5e5e5;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
-    font-size: 17px;
-}
+    .admin-panel.open {
+        left: 0;
+    }
 
-.admin-header button {
-    border: none;
-    background: none;
-    font-size: 28px;
-    cursor: pointer;
-}
+    .admin-header {
+        height: 60px;
+        border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        font-size: 17px;
+    }
 
-.admin-content {
-    padding: 20px;
-}
+    .admin-header button {
+        border: none;
+        background: none;
+        font-size: 28px;
+        cursor: pointer;
+    }
 
-.admin-content h3 {
-    margin-top: 0;
-}
+    .admin-content {
+        padding: 20px;
+    }
 
-.admin-status {
-    padding: 12px;
-    background: #f4f4f4;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
+    .admin-content h3 {
+        margin-top: 0;
+    }
 
-.admin-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 5px;
-    border-bottom: 1px solid #eeeeee;
-}
+    .admin-status {
+        padding: 12px;
+        background: #f4f4f4;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
 
-.admin-action {
-    width: 100%;
-    padding: 12px;
-    margin-top: 12px;
-    border: 1px solid #dddddd;
-    background: white;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-}
+    .admin-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 5px;
+        border-bottom: 1px solid #eeeeee;
+    }
 
-.admin-action:hover {
-    background: #f5f5f5;
-}
-    </style>
+    .admin-action {
+        width: 100%;
+        padding: 12px;
+        margin-top: 12px;
+        border: 1px solid #dddddd;
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .admin-action:hover {
+        background: #f5f5f5;
+    }
+</style>
+```
+
 </head>
 
 <body>
 
-    <div class="topbar">
-        <button class="menu-button">☰</button>
-        ChatGGS
-    <div class="admin-panel" id="adminPanel">
+```
+<!-- Top bar -->
+<div class="topbar">
+    <button class="menu-button" onclick="openAdmin()">☰</button>
+    ChatGGS
+</div>
+
+<!-- Admin panel -->
+<div class="admin-panel" id="adminPanel">
     <div class="admin-header">
         <strong>ChatGGS Admin</strong>
         <button onclick="closeAdmin()">×</button>
@@ -241,84 +252,90 @@
     </div>
 </div>
 
-    <div class="chat" id="chat">
+<!-- Chat -->
+<div class="chat" id="chat">
 
-        <div class="status">
-            🟢 ChatGGS is available
-        </div>
-
-        <div class="message ggs">
-            <div class="bubble">
-                Hello! I am ChatGGS — Gabriel Genuine Stupidity.
-            </div>
-        </div>
-
-        <div class="message user">
-            <div class="bubble">
-                Hello ChatGGS!
-            </div>
-        </div>
-
-        <div class="message ggs">
-            <div class="bubble">
-                Hello. What do you want?
-            </div>
-        </div>
-
+    <div class="status">
+        🟢 ChatGGS is available
     </div>
 
-    <div class="input-area">
-        <div class="input-box">
-            <input
-                type="text"
-                id="messageInput"
-                placeholder="Message ChatGGS..."
-            >
-            <button class="send" onclick="sendMessage()">➤</button>
+    <div class="message ggs">
+        <div class="bubble">
+            Hello! I am ChatGGS — Gabriel Genuine Stupidity.
         </div>
     </div>
 
-    <script>
-        function sendMessage() {
-            const input = document.getElementById("messageInput");
-            const chat = document.getElementById("chat");
+    <div class="message user">
+        <div class="bubble">
+            Hello ChatGGS!
+        </div>
+    </div>
 
-            if (input.value.trim() === "") {
-                return;
-            }
+    <div class="message ggs">
+        <div class="bubble">
+            Hello. What do you want?
+        </div>
+    </div>
 
-            const message = document.createElement("div");
-            message.className = "message user";
+</div>
 
-            message.innerHTML = `
-                <div class="bubble">
-                    ${input.value}
-                </div>
-            `;
+<!-- Input -->
+<div class="input-area">
+    <div class="input-box">
+        <input
+            type="text"
+            id="messageInput"
+            placeholder="Message ChatGGS..."
+        >
+        <button class="send" onclick="sendMessage()">➤</button>
+    </div>
+</div>
 
-            chat.appendChild(message);
+<script>
+    function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const chat = document.getElementById("chat");
 
-            input.value = "";
+        const text = input.value.trim();
 
-            chat.scrollTop = chat.scrollHeight;
+        if (text === "") {
+            return;
         }
 
-        document.getElementById("messageInput").addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
-        });
-    </script>
-<script>
-    const adminPanel = document.getElementById("adminPanel");
+        const message = document.createElement("div");
+        message.className = "message user";
 
-    document.querySelector(".menu-button").onclick = function() {
-        adminPanel.classList.add("open");
-    };
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+
+        // Use textContent instead of innerHTML.
+        // This prevents HTML/code typed by the user
+        // from being interpreted as webpage code.
+        bubble.textContent = text;
+
+        message.appendChild(bubble);
+        chat.appendChild(message);
+
+        input.value = "";
+
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    document.getElementById("messageInput").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    function openAdmin() {
+        document.getElementById("adminPanel").classList.add("open");
+    }
 
     function closeAdmin() {
-        adminPanel.classList.remove("open");
+        document.getElementById("adminPanel").classList.remove("open");
     }
 </script>
+```
+
 </body>
 </html>
