@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGGS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #222222;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top bar */
+        .topbar {
+            height: 60px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .menu-button {
+            position: absolute;
+            left: 18px;
+            border: none;
+            background: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Chat area */
+        .chat {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px 20px 120px;
+        }
+
+        .message {
+            max-width: 750px;
+            margin: 0 auto 28px;
+            display: flex;
+        }
+
+        .message.ggs {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            padding: 13px 17px;
+            border-radius: 18px;
+            max-width: 70%;
+            line-height: 1.5;
+        }
+
+        .ggs .bubble {
+            background: #f4f4f4;
+        }
+
+        .user .bubble {
+            background: #e8f0fe;
+        }
+
+        /* Bottom input */
+        .input-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 18px;
+            background: white;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .input-box {
+            max-width: 750px;
+            margin: auto;
+            display: flex;
+            border: 1px solid #cccccc;
+            border-radius: 25px;
+            padding: 5px;
+            background: white;
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 12px 15px;
+            font-size: 15px;
+        }
+
+        .send {
+            border: none;
+            background: #222222;
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .send:hover {
+            background: #444444;
+        }
+
+        /* Status */
+        .status {
+            text-align: center;
+            font-size: 13px;
+            color: #777777;
+            margin-top: -15px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <button class="menu-button">☰</button>
+        ChatGGS
+    </div>
+
+    <div class="chat" id="chat">
+
+        <div class="status">
+            🟢 ChatGGS is available
+        </div>
+
+        <div class="message ggs">
+            <div class="bubble">
+                Hello! I am ChatGGS — Gabriel Genuine Stupidity.
+            </div>
+        </div>
+
+        <div class="message user">
+            <div class="bubble">
+                Hello ChatGGS!
+            </div>
+        </div>
+
+        <div class="message ggs">
+            <div class="bubble">
+                Hello. What do you want?
+            </div>
+        </div>
+
+    </div>
+
+    <div class="input-area">
+        <div class="input-box">
+            <input
+                type="text"
+                id="messageInput"
+                placeholder="Message ChatGGS..."
+            >
+            <button class="send" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("messageInput");
+            const chat = document.getElementById("chat");
+
+            if (input.value.trim() === "") {
+                return;
+            }
+
+            const message = document.createElement("div");
+            message.className = "message user";
+
+            message.innerHTML = `
+                <div class="bubble">
+                    ${input.value}
+                </div>
+            `;
+
+            chat.appendChild(message);
+
+            input.value = "";
+
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        document.getElementById("messageInput").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+
+</body>
+</html>
