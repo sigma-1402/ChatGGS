@@ -248,69 +248,72 @@
         let chatGGSOnline = true;
 
 
-        async function loadStatus() {
+       async function loadStatus() {
 
-            const status =
-                document.getElementById("status");
+    const status =
+        document.getElementById("status");
 
-            const input =
-                document.getElementById("messageInput");
+    const input =
+        document.getElementById("messageInput");
 
-            const sendButton =
-                document.getElementById("sendButton");
-
-
-            const result =
-                await supabaseClient
-                    .from("settings")
-                    .select("online")
-                    .eq("id", 1)
-                    .single();
+    const sendButton =
+        document.getElementById("sendButton");
 
 
-            if (result.error) {
-
-                console.error(result.error);
-
-                status.textContent =
-                    "⚠️ Could not load ChatGGS status.";
-
-                return;
-            }
+    const result =
+        await supabaseClient
+            .from("settings")
+            .select("online")
+            .eq("id", 1)
+            .single();
 
 
-            chatGGSOnline =
-                result.data.online;
+    if (result.error) {
+
+        console.error("Supabase error:", result.error);
+
+        status.textContent =
+            "⚠️ Supabase error: " + result.error.message;
+
+        input.disabled = true;
+        sendButton.disabled = true;
+
+        return;
+    }
 
 
-            if (chatGGSOnline) {
+    chatGGSOnline =
+        result.data.online;
 
-                status.textContent =
-                    "🟢 ChatGGS is available";
 
-                status.classList.remove("offline");
+    if (chatGGSOnline) {
 
-                input.disabled = false;
-                sendButton.disabled = false;
+        status.textContent =
+            "🟢 ChatGGS is available";
 
-                input.placeholder =
-                    "Message ChatGGS...";
+        status.classList.remove("offline");
 
-            } else {
+        input.disabled = false;
+        sendButton.disabled = false;
 
-                status.textContent =
-                    "🔴 ChatGGS is unavailable";
+        input.placeholder =
+            "Message ChatGGS...";
 
-                status.classList.add("offline");
+    } else {
 
-                input.disabled = true;
-                sendButton.disabled = true;
+        status.textContent =
+            "🔴 ChatGGS is unavailable";
 
-                input.placeholder =
-                    "ChatGGS is unavailable";
+        status.classList.add("offline");
 
-            }
-        }
+        input.disabled = true;
+        sendButton.disabled = true;
+
+        input.placeholder =
+            "ChatGGS is unavailable";
+
+    }
+}
 
 
         /* ---------------------------------
